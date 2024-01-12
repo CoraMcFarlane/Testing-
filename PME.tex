@@ -1,0 +1,361 @@
+\documentclass[paper=a4, fontsize=12pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{subcaption}
+\usepackage{capt-of}
+\usepackage{commath}
+\usepackage{cancel}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{amsthm}
+\newtheorem{definition}{Definition}
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+%\usepackage{mathptmx}
+
+\DeclareSymbolFont{eulerletters}{U}{zeur}{b}{n}
+\DeclareMathSymbol{\eulu}{\mathord}{eulerletters}{`u}
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+\usepackage{setspace}
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+\normalfont \normalsize 
+\textsc{Ontario Tech University, Partial Differential Equation} \\ [25pt] % Your university, school and/or department name(s)
+\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+\huge Porous Medium Equation\\ % The assignment title
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+\author{Zahra F.\\ Cora M.}
+
+\date{\normalsize December 10, 2021} % Today's date or a custom date
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\doublespacing
+\section{Overview}
+\subsection{Description}
+
+The Porous Medium Equation (PME), $u_t = \Delta u^m$ , is a nonlinear parabolic partial differential equation that bears some resemblance to the heat equation, but deviates in its properties. $u=u(\mathbf{x}, t)$ is a function that depends on the spatial variable, $\mathbf{x} \in \mathbb{R}^d$ (where $d \geq 1$), and time, $t \in \mathbb{R}$.  The Laplacian for the PME operates exclusively on the spatial variable and neglects time. In most physical settings, $u \ge 0$; however, the signed PME (presented below) is often used as an antisymmetric extension of nonlinearity:
+
+$$u_t = \Delta (|u|^{m-1}u)$$
+
+Adding a forcing term, $f=f(\mathbf{x},t, u, \nabla u)$ produces the complete PME: 
+
+$$ u_t  = \Delta (|u|^{m-1}u) + f$$
+
+The PME has been used in several physical applications to describe phenomena such as fluid flow, heat transfer, diffusion, and has application to other fields like mathematical biology. The PME may also be seen in its divergence form as $u_t =  \nabla \cdot (m|u|^{m-1} \nabla u) + f ^{[1]}$.
+\subsection{Historical Note}
+
+After H. Darcy published his basic flow law in 1858, French scientist J. Boussinesq first proposed the PME as a mathematical model for the flow of groundwater filtration. He did so with a value of $m=2$. The equation then reappeared in the 1930s when L. Leibenzon and M. Muskat were studying gases in porous media. In 1948, Pulubarinova-Kochia proposed selfsimilar solutions for the PME and proved the knowledge of special solutions (such as those discussed in section \textbf{3}). The source-type solutions were found soon after by Ya. Zeldovich, A. Kompanyeets, and B. Barenblatt in the 1950s (a derivation of the source solution is found in \textbf{section 3.3}). 
+
+Oleinik, Kalashnikov, and Czhou introduced a suitable concept of the general solution and analyzed both Cauchy and standard boundary problems in one dimension in 1958 and Sabinina later built upon their work by extending it to several dimensions. Then, the well-posedness in several classes of general data was established in the 1980s. Since then, basic continuity of solutions and free boundaries has been proven $^{[1]}$. 
+\section{Derivation}
+An isentropic process is a reversible thermodynamic process where no heat is exchanged between a system and its surroundings$^{[7]}$. An ideal gas flowing isentropically through a porous medium follows three laws. The first law is the Equation of State:
+\begin{equation}
+	\rho = p^\gamma
+\end{equation}
+
+Where $p(\mathbf{x},t)$ is the pressure, $\rho(\mathbf{x},t)$ is the density and $\gamma$ is a constant representing the ratio of specific heats.\\
+The second law is the Conservation of Mass: 
+
+\begin{equation}
+	\rho_t = -\nabla\cdot(\rho v)
+\end{equation}
+Where $v$ is the velocity.\\
+The third is Darcy's law:
+
+\begin{equation}
+	v = - \nabla p
+\end{equation} 
+
+In standard flow, conservation of momentum is replaced by Darcy's law $^{[3]}$
+
+Combining these equations yields
+
+ $$\rho_t = \nabla\cdot(\rho\nabla(\rho^{\gamma^{-1}}))$$
+Which, expanded, gives 
+
+$$\rho_t = \frac{\gamma^{-1}}{1+\gamma^{-1}}\Delta(\rho^{1+\gamma^{-1}}) = \frac{1}{1 +\gamma}\Delta (\rho^{1+\gamma^{-1}})$$
+Finally, setting $u = \rho$ and re-scaling $t$ by $\frac{1}{1+\gamma}$ produces the porous medium equation with $m> 1$:
+
+\begin{equation}
+	u_t = \Delta(u^m)~~~~~~~~^{[4]}
+\end{equation}
+
+
+ 
+\section{Special Solutions}
+There are three main types of PMEs:
+
+\begin{enumerate}
+	\item  The initial-value problem is defined for all $\mathbf{x}\in \mathbb{R}^d$ ($d \geq 1$) for a time $0<t<T$ with $T$ either finite or infinite. This is usually called the Cauchy Problem.
+	\item The PME is part of a sub domain $\Omega \subset \mathbb{R}^d$, and the initial and boundary conditions are provided. These condition are Dirichlet in nature \textemdash that is $u(\mathbf{x},t) = g(\mathbf{x},t)$ for $\mathbf{x} \in \partial\Omega$ and $0<t<T$. Then, by definition, $\Omega$ is bounded, $u \geq 0$, $f=0$, and $g = 0$ is typically assumed.
+	\item Similar to type 2, but the data on the lateral boundary are Neumann data: specific values for the derivatives of $u$ are applied at the boundary of the solution$^{[2]}$ in the form $\partial_n u^m(\mathbf{x},t) = h(\mathbf{x},t)$. As with type 2,  $\Omega$ is bounded, and $f=0$, and $h=0 ~~^{[1]}$.
+\end{enumerate} 
+
+\subsection{Well-Posedness and Classical Solutions}
+Uniformly parabolic equations of the type $u_t = \sum_{i=1}^d \frac{\partial}{\partial x_i}a_i(\mathbf{x}, t, u , \nabla u) + b(\mathbf{x}, t, y, \nabla u)$ are defined by the property that there exist constants $0< c_1 < c_2 < \infty$ such that for every vector $\mathbf{\xi}= (\xi_1, \dots, \xi_d)$, the following inequalities hold
+
+$$c_1 |\mathbf{\xi}|^2 \le \sum_{i=1}^d \frac{\partial a_i}{\partial p_j}(\mathbf{x}, t, u, u_{x_i}) \xi_i, \xi_j \le c_2 |\mathbf{\xi}|^2$$
+
+These equations have unique, smooth, continuous (down to $t=0$) solutions with bounded and continuous initial data; they also adhere to the Maximum/Comparison Principle. In the case of the PME, $a(\mathbf{x}, t, y, \nabla u) = |u|^{m-1} \nabla u$, indicating that the inequalities fail to hold at $u=0$ unless $c_1=0$ \textemdash violating the condition for uniform parabolicity. This non-uniform parabolicity is circumvented by introducing restrictions on the initial conditions.
+
+% Should I use the work classical conditions here? probably not. 
+
+If $u(\mathbf{x},0)= u_0(\mathbf{x})$ is a continuous real-valued function with $\varepsilon \le u_0(\mathbf{x}) \le \frac{1}{\varepsilon}$ (for some $0 < \varepsilon < 1$), there exists a unique solution that depends continuously on $u_0(\mathbf{x})$ (this is known as a classical solution). This solution satisfies $\varepsilon \le u(\mathbf{x},t) \le \frac{1}{\varepsilon}$ for all $\mathbf{x} \in \mathbb{R}^d$ and $t \in (0, \infty)$. 
+
+Similarly, if $-\frac{1}{\varepsilon} \le u_0(\mathbf{x}) \le - \varepsilon$, a classical solution exists with $-\frac{1}{\varepsilon} \le u(\mathbf{x},t) \le - \varepsilon$.
+
+
+
+\subsection{Separation of Variables}
+As is the case with the heat equation, it is possible to attempt separation of variables for the non-forced equation, $u_t = \Delta (u^m)$. Letting $u(\mathbf{x},t) = F(\mathbf{x)}T(t)$ (where $\mathbf{x} \in \mathbb{R}^d$), we get the equation
+
+\begin{equation}
+    (FT)_t = \Delta(F^mT^m)
+\end{equation}
+
+Where $\Delta$ only operates on the spatial variables. Dividing by $F^mT^m$ and introducing a separation constant yields the two differential equations: $T_t = -\lambda T^m$ and $\Delta F = \lambda F^m$.
+
+In the case where $\lambda = 0$, the time-dependendent solution is constant:
+
+\begin{equation}
+    T(t)=A_0
+\end{equation} The space-dependent solution becomes the Laplace equation for some $w(\mathbf{x})= u^m$, $\Delta w = 0$. The fundamental solution to this modified equation is
+
+\begin{equation}
+    \Phi (\mathbf{x}) \equiv \begin{cases}
+        \frac{1}{2 \pi} \ln |x| & d = 2 \\
+        \frac{1}{(2-d)d \beta(n) |x|^{d-2}} & d \ge 3
+    \end{cases}
+\end{equation} 
+where $\beta(d)$ is the volume of the $d$-dimensional unit sphere $^{[6]}$. 
+
+Cases where $\lambda \ne 0$ provides much different solutions. The time dependent equation is easy to solve. Note, $\frac{T_t}{T^m}= -\frac{d}{d t}(\frac{1}{m-1}\frac{1}{T^{m-1}})$, so
+
+$$\frac{1}{T^{m-1}}= (m-1)(\lambda t+C)$$
+
+
+\begin{equation}
+    T= \Big{[} \frac{1}{(m-1)(\lambda t+C)}\Big{]}^\frac{1}{m-1}
+\end{equation}
+
+Now the spatial-dependent dependent equation is more difficult to solve, but we make the ansatz $F(\mathbf{x})= |\mathbf{x}|^\alpha$. Then,
+
+$$\lambda F = \nabla \cdot (\nabla |\mathbf{x}|^{m\alpha})= \Big{(}\frac{\partial}{\partial x_1}, \frac{\partial}{\partial x_2}, \dots, \frac{\partial}{\partial x_d}\Big{)}(\sum_{i=1}^d x_i^2)^{\frac{m\alpha}{2}}$$
+
+The partial derivative with respect to $x_i$ is then
+
+$$\frac{\partial}{\partial x_i}|\mathbf{x}|^{m\alpha} = \frac{m \alpha}{2} 2 x_i (\sum_{i=1}^d x_i^2)^{\frac{m\alpha}{2}-1}$$
+$$= m\alpha x_i |\mathbf{x}|^{m \alpha -2}$$
+
+The second partial derivative is then 
+
+$$\frac{\partial ^2}{\partial x_i ^2} |\mathbf{x}|^{m \alpha} = m \alpha \Big{[}(\sum_{i=1}^d x_i^2)^{\frac{m\alpha -2 }{2}} + (m \alpha - 2) x_i^2 (\sum_{i=1}^d x_i^2)^{\frac{m\alpha-4}{2}}\Big{]}$$
+$$ = m \alpha [|\mathbf{x}|^{m \alpha -2} + (m \alpha - 2) x_i^2|\mathbf{x}|^{m \alpha - 4}]$$
+
+The Laplacian being the sum of these second order partial derivatives gives
+
+$$\Delta |\mathbf{x}|^{m \alpha} = m \alpha \sum_{i=1}^d \Big{(}|\mathbf{x}|^{m \alpha -2} + (m \alpha - 2)x_i^2 |\mathbf{x}|^{m \alpha - 4}\Big{)}$$
+$$=m \alpha \Big{(}d |\mathbf{x}|^{m \alpha -2} + [m \alpha - 2]|\mathbf{x}|^{m \alpha - 4}\sum_{i=1}^d x_i^2\Big{)} $$
+$$= m \alpha |\mathbf{x}|^{m \alpha -2}(d + m \alpha -2)$$
+
+Thus, $\lambda |\mathbf{x}|^\alpha = m \alpha |\mathbf{x}|^{m \alpha -2}(d + m \alpha -2)$. Since this is only true for all values of $\mathbf{x}$ if both the coefficients and the power on the norm are equivalent, $\alpha = \frac{2}{m - 1}$, and $\lambda = \frac{2m(md - d + 2)}{(m-1)^2}$. The product solution is then 
+
+\begin{equation}
+    u(\mathbf{x}, t) = \Big{(} \frac{m-1}{-2m(md -d + 2)t + C}\Big{)}^{m-1}|\mathbf{x}|^{2(m-1)^{-1}}
+\end{equation}
+
+Where $C$ was modified to absorb any relevant constants $^{[1, 5]}$. % Should I talk about the asymptote?
+
+
+\subsection{Selfsimilarity For Source Solution}
+
+The initial value problem, $u( \mathbf{x}, t) = M \delta (\mathbf{x})$ where $M >0$ and $\delta$ is the delta-dirac function is of particular interest in mechanics and engineering. The solution to this problem is known as the source solution. 
+
+One method of deriving the source solution  is using selfsimilarity. It is assumed that there exists a scaling of the variables such that the source solution becomes stationary. Making the following ansatz: 
+
+$$u' = f(\mathbf{x}')\text{,      }~~~~~~~~ u'=ut^\alpha\text{,}~~~~~~\text{and }~~~~~~\mathbf{x}'=\mathbf{x}t^{-\beta}$$
+
+The selfsimilar form becomes
+
+\begin{equation}
+    u(\mathbf{x},t) = t^{-\alpha}f(\eta), ~~~~~~~~ \mathbf{\eta} = \mathbf{x}t^{-\beta}
+\end{equation}
+
+With chain rule, it is easy to show $u_t = -t^{-\alpha - 1} (\alpha f(\eta)+ \beta \nabla_\eta f(\eta) \cdot \mathbf{\eta})$ and 
+
+$$\Delta (u^m)=t^{-\alpha m} \Delta_x(f^m (xt^{-\beta}))$$
+$$= t^{-\alpha m - 2 \beta} \Delta_\eta (f(\eta))^m$$
+
+Here $\Delta_x$ and $\Delta_\eta$ represent the Laplacian with respect to $\mathbf{x}$ and $\mathbf{\eta}$, respectively, and $\nabla _\eta$ represents the gradient with respect to $\mathbf{\eta}$. Thus, $u_t = \Delta u^m$ becomes
+
+\begin{equation}
+    -t^{-\alpha - 1} (\alpha + \beta \nabla_\eta f(\eta) \cdot \mathbf{\eta}) = t^{-\alpha m - 2 \beta} \Delta_\eta (f(\eta))^m
+\end{equation}
+
+Similarly to section \textbf{3.2}, equation (\textbf{3.7}) is only true if the exponents and the coefficients are both are equivalent. Thus (dropping the $\eta$ subscripts), 
+
+\begin{equation}
+    \alpha (m-1) + 2 \beta =1 ~~~~~~~~ \text{and} ~~~~~~~~ \Delta f^m + \beta \mathbf{\eta} \cdot \nabla f + \alpha f = 0
+\end{equation}
+
+The former provides a relationship between the two scaling variables. To find the remaining scaling variable, conservation of mass is utilized. For the spatial domain $\Omega$,
+
+$$\int_{\Omega} u(\mathbf{x},t) d \mathbf{x}=\int_{\Omega} t^{-\alpha} f(\mathbf{x}t^{-\beta}) d \mathbf{x}$$
+$$= t^{-\alpha}\underbrace{\int  \dots \int }_{\text{d times}} f(x_1 t^{-\beta}, \dots,x_d t^{-\beta})d x_1 \dots d x_d$$
+$$=t^{-\alpha} \underbrace{t^\beta \dots t^\beta}_{\text{d times}} \int \dots \int f(\eta_1, \dots, \eta_d) d\eta_1 \dots d \eta_d$$
+
+Note, u-substitutions of $\eta_i = x_i t^{-\beta}$ were made in the line above.
+
+$$=t^{d\beta - \alpha} \int_\Omega f(\mathbf{\eta}) d \mathbf{\eta} = \text{const}$$
+
+Which is only true if $d \beta - \alpha = 0$, so 
+
+\begin{equation}
+    \beta = \frac{1}{d(m-1) + 2} ~~~~~~~~ \text{and} ~~~~~~~~ \alpha = \frac{d}{d(m-1) + 2}
+\end{equation}
+
+
+To find the solution to the remaining equation in (\textbf{3.8}), a solution of the type $f(\mathbf{\eta}) = f(r) = r = | \mathbf{\eta}|$ is attempted, since the problem is rotationally invariant. This reduces the problem to the ODE
+
+\begin{equation}
+    \frac{1}{r^{d-1}}(r^{d-1}(f^m)')' + \beta r f' + d \beta f = 0
+\end{equation}
+
+After multiplying both sides of (\textbf{3.10}) by $r^{d-1}$, this yields 
+
+$$r^{d-1} (f^m)' + \beta r^d f)'=0$$
+
+Which can be integrated once to get
+
+$$(f^m)' + \beta r f = 0$$
+
+Here, the constant of integration is taken as $0$ since $f \to 0$ as $r \to \infty$ is the desired behaviour. Solving this ODE produces
+
+\begin{equation}
+    f(r) = \Big{(}A - \frac{\beta(m-1)}{2m}r^2 \Big{)}^{(m-1)^{-1}}
+\end{equation}
+
+Where $A$ is a constant of integration.
+
+\subsection{The Porous Medium Equation in 1-D}
+
+In one dimension, $\mathbf{x}= x \in \mathbb{R}$ and $n=1$. The method of separation of variables described in section \textbf{3.2} yields 
+
+\begin{equation}
+    u(x,t) = \Big{(} \frac{m-1}{-2m(m+1)t + C}\Big{)}^{m-1} x^{(m-1)^{-1}}
+\end{equation}
+
+Making appropriate substitutions for $\mathbf{\eta} = \mathbf{x}t^{-\beta}$ yields the following source solution:
+
+\begin{equation}
+    u(x,t) = t^{-\frac{1}{m+1}}\Big{(} A - \frac{m-1}{2m(m+1)}x^2t^{-\frac{2}{m+1}}\Big{)}^{(m-1)^{-1}}
+\end{equation}
+
+\subsection{Other Solutions}
+
+Several other types of solutions exist for different constructions of the problem. The quadratic and linear pressure solutions also selfsimilar like the source solution$^{[3]}$. The travelling wave solution utilizes similar geometry to the method of characteristics$^{[1]}$.
+
+\section{Application}
+\subsection{Gas through a Porous Medium}
+The main application of the PME is to describe the flow of an ideal gas in a homogeneous porous medium, as the name suggests. It can be written in the form 
+\begin{equation}
+\	rho_t = c \Delta (\rho^m)
+\end{equation}
+Where 
+
+\begin{equation}
+	c= \frac{\gamma_1 kp_0}{(\gamma +1 )\epsilon\mu}
+\end{equation}
+
+Here $\gamma_1$ represents the polytropic exponent, $p_0$ is the reference pressure, $k$ is the permeability of the medium, $\epsilon$ represents the porosity of the medium, and $\mu$ is the viscosity of the fluid.
+For the homogeneous case of the PME, $c$ is a positive constant and can therefore be scaled out since it plays no functional role. In an inhomogeneous medium,  $\epsilon$, $\mu$ and $k$ will not be constants, but will be a function of space as well. This yields the inhomogeneous PME:
+
+\begin{equation}
+	\epsilon(\mathbf{x},t) u_t = \nabla \cdot(c(\mathbf{x},t)\nabla u^m) 
+\end{equation}
+
+
+In another major extension of the PME, the State Law is not assumed to be an exponential relation, but rather a function of $\rho$ such that $\rho = p(\rho)$. This also changes the $k$ and $\mu$ values, as they will now depend on $\rho$. This produces the equation
+
+\begin{equation}
+	\rho_t = \Delta \Phi(\rho) + f
+\end{equation}
+
+Where $\Phi$ is a given monotonically increasing function of $\rho$ for $\rho \geq 0$. As before, $f(\mathbf{x},t)$ represents the mass sources or sinks distributed in the medium . This is called the Filtration Equation. There are several other extension of this type of the PME; however, these are the most relevant. 
+
+\subsection{Nonlinear Heat Transfer}
+The second most important application of the PME happens in the theory of heat propagation with temperature-dependent thermal conductivity. The general equation (in the absences of heat sources or sinks) is 
+
+\begin{equation}
+	c\rho\frac{\partial T}{\partial t} = \nabla \cdot(k\nabla T)
+\end{equation}
+
+Where T is the temperature, $c$ is the specific heat at constant pressure, $\rho$ is the density of the medium, and $k$ is the thermal conductivity. It is important to note that $c$, $\rho$ and $k$ are generally functions of $\mathbf{x}$ and $t$. At low temperatures, they are approximated by constants \textemdash giving the heat equation. At high temperatures, this approximation fails and their dependence on space and time must be considered. 
+\subsection{Other Applications}
+There many more applications for the PME \textemdash some which arise naturally like Boussines's equation, which deals with ground water flow and is of the form 
+
+\begin{equation}
+	\rho(\frac{du_z}{dt} +\eulu\cdot\nabla u_z) = -\frac{\partial p}{\partial z} - pg
+\end{equation}
+
+The PME can also be modified to model the population of a single species: 
+
+\begin{equation}
+	u_t = \nabla \cdot (k\nabla u) +f(u)
+\end{equation}
+
+Although equation (\textbf{4.7}) is not particularly useful on its own, it is considered a good starting point for more complex equation with multiple species. 
+
+The PME may be used to model many more systems, such as reaction-diffusion processes. Its versatility allows it to be used in many parts of science and engineering $^{[1]}$.
+
+\newpage
+
+\section{References}
+-[1] Vazquez, J. L. (2006). The Porous Medium Equation: Mathematical Theory (Oxford Mathematical Monographs) (1st ed.). Clarendon Press.\\
+
+-[2] Wikipedia contributors. (2021, December 8). Neumann boundary condition. Wikipedia. https://en.wikipedia.org/wiki/Neumann\_boundary\_condition\\
+
+-[3] Fasano, A., \& Primicerio, M. (1986). Problems in Nonlinear Diffusion: Lectures given at the 2nd 1985 Session of the Centro Internazionale Matematico Estivo (C.I.M.E.) held at Montecatini . . . 18, 1985 (Lecture Notes in Mathematics, 1224) (1986th ed.). Springer.\\
+
+-[4] Wathen, A., \& Qian, L. (2001). Porous medium equation: nonlinear diffusion with sharp interfaces.\\
+
+-[5] Youtube [Dr Peyam]. (2021, October 18). Porous Medium Equation [Video]. YouTube. https://www.youtube.com/watch?v=J\_mJGuGjbu0\\
+
+-[6] http://www.math.ualberta.ca/~xinweiyu/527.1.08f/lec04.pdf. (n.d.).\\ http://www.math.ualberta.ca/~xinweiyu/527.1.08f/lec04.pdf\\
+
+-[7] Connor, N. (2019, June 3). What is Isentropic Process - Definition. Thermal Engineering. https://www.thermal-engineering.org/what-is-isentropic-process-definition/\\
+
+\end{document}
+\\
